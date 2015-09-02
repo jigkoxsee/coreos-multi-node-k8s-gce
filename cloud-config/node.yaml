@@ -1,14 +1,24 @@
 #cloud-config
+ssh_authorized_keys:
+ - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDyS+f8gcGpLrxvM5v4Ro0VNYnhdC6/48HEPX5oUigTviilB/nMC/f8r05MJ4GpWO0dAq2FVEjt1EdQ3hu+9Pviu2h7Zj3EX/qkud7RbodttMOsL5QGhDYzWMlbFIqCyaOKS0vuo1Ex/G4dBdt2P3rNFnDozAiz6RQvxupBrE7b/ZhHze6VUwF3NSqCYoUpBDrmeSHgRGse6JmoINWpJOUd2nDECn/v8jiUisKPf3lTOXyti4sQL3kCJERAaj4T/WESa2LtAu9lskJ8GzUPcimv7XcZq/yzkFsCcU0/mHEydQrlS/n9afgZaPHPEpu/GuRIiVGKwsjSRK7jtgQHkUQL ionization@hp2.soup.ce.kmitl.ac.th
 
 coreos:
   etcd2:
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
     advertise-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    initial-cluster: master=http://10.222.1.1:2380
+    initial-cluster: master=http://10.0.1.150:2380
     proxy: on
   fleet:
     metadata: role=node
   units:
+    - name: 00-ens3.network
+      runtime: true
+      content: |
+        [Match]
+        Name=ens3
+
+        [Network]
+        Address=10.0.1.151/24
     - name: fleet.service
       command: start
     - name: flanneld.service
@@ -19,7 +29,7 @@ coreos:
             [Unit]
             Requires=etcd2.service
             [Service]
-            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.244.0.0/16", "Backend": {"Type": "vxlan"}}'
+            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.0.1.0/16", "Backend": {"Type": "vxlan"}}'
     - name: docker.service
       command: start
       drop-ins:
@@ -31,6 +41,12 @@ coreos:
             [Service]
             Environment=DOCKER_OPTS='--insecure-registry="0.0.0.0/0"'
 write_files:
+ - path: /etc/resolv.conf
+   permissions: 0644
+   owner: root
+   content: |
+     nameserver 10.0.1.254
+     nameserver 161.246.4.3
  - path: /opt/bin/wupiao
    permissions: '0755'
    content: |
