@@ -6,7 +6,7 @@ coreos:
   etcd2:
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
     advertise-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    initial-cluster: master=http://10.0.1.150:2380
+    initial-cluster: master=http://192.168.122.90:2380
     proxy: on
   fleet:
     metadata: role=node
@@ -18,7 +18,7 @@ coreos:
         Name=ens3
 
         [Network]
-        Address=10.0.1.151/24
+        Address=192.168.122.73/24
     - name: fleet.service
       command: start
     - name: flanneld.service
@@ -29,7 +29,7 @@ coreos:
             [Unit]
             Requires=etcd2.service
             [Service]
-            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.100.0.0/16", "Backend": {"Type": "vxlan"}}'
+            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network":"10.10.0.0/16", "Backend": {"Type": "vxlan"}}'
     - name: docker.service
       command: start
       drop-ins:
@@ -45,7 +45,7 @@ write_files:
    permissions: 0644
    owner: root
    content: |
-     nameserver 10.0.1.254
+     nameserver 192.168.122.254
      nameserver 161.246.4.3
  - path: /opt/bin/wupiao
    permissions: '0755'
