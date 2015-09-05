@@ -1,10 +1,10 @@
 #cloud-config
 ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDyS+f8gcGpLrxvM5v4Ro0VNYnhdC6/48HEPX5oUigTviilB/nMC/f8r05MJ4GpWO0dAq2FVEjt1EdQ3hu+9Pviu2h7Zj3EX/qkud7RbodttMOsL5QGhDYzWMlbFIqCyaOKS0vuo1Ex/G4dBdt2P3rNFnDozAiz6RQvxupBrE7b/ZhHze6VUwF3NSqCYoUpBDrmeSHgRGse6JmoINWpJOUd2nDECn/v8jiUisKPf3lTOXyti4sQL3kCJERAaj4T/WESa2LtAu9lskJ8GzUPcimv7XcZq/yzkFsCcU0/mHEydQrlS/n9afgZaPHPEpu/GuRIiVGKwsjSRK7jtgQHkUQL ionization@hp2.soup.ce.kmitl.ac.th
-
+hostname: core.soup.ce.kmitl.ac.th
 coreos:
   etcd2:
-    name: master1
+    name: master
     initial-advertise-peer-urls: http://192.168.122.90:2380
     initial-cluster-token: k8s_etcd
     initial-cluster: master1=http://192.168.122.90:2380
