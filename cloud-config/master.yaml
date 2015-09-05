@@ -52,7 +52,8 @@ write_files:
    permissions: 0644
    owner: root
    content: |
-     nameserver 192.168.122.254
+     search soup.ce.kmitl.ac.th
+     nameserver 192.168.122.1
      nameserver 161.246.4.3
  - path: /opt/bin/wupiao
    permissions: '0755'
