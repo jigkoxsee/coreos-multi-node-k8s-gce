@@ -5,13 +5,13 @@ ssh_authorized_keys:
 coreos:
   etcd2:
     name: master1
-    initial-advertise-peer-urls: http://10.0.1.150:2380
+    initial-advertise-peer-urls: http://192.168.122.90:2380
     initial-cluster-token: k8s_etcd
-    initial-cluster: master1=http://10.0.1.150:2380
+    initial-cluster: master1=http://192.168.122.90:2380
     initial-cluster-state: new
-    listen-peer-urls: http://10.0.1.150:2380,http://10.0.1.150:7001
+    listen-peer-urls: http://192.168.122.90:2380,http://192.168.122.90:7001
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    advertise-client-urls: http://10.0.1.150:2379,http://10.0.1.150:4001
+    advertise-client-urls: http://192.168.122.90:2379,http://192.168.122.90:4001
   fleet:
     metadata: role=master
   units:
@@ -22,7 +22,7 @@ coreos:
         Name=ens3
 
         [Network]
-        Address=10.0.1.150/24
+        Address=192.168.122.90/24
     - name: etcd2.service
       command: start
     - name: fleet.service
@@ -35,7 +35,7 @@ coreos:
             [Unit]
             Requires=etcd2.service
             [Service]
-            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network": "10.100.0.0/16", "Backend": {"Type": "vxlan"}}'
+            ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{"Network": "10.10.0.0/16", "Backend": {"Type": "vxlan"}}'
     - name: docker.service
       command: start
       drop-ins:
@@ -52,7 +52,7 @@ write_files:
    permissions: 0644
    owner: root
    content: |
-     nameserver 10.0.1.254
+     nameserver 192.168.122.254
      nameserver 161.246.4.3
  - path: /opt/bin/wupiao
    permissions: '0755'
