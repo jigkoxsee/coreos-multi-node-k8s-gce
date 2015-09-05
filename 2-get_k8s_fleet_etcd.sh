@@ -1,14 +1,14 @@
 #!/bin/bash
 
-ssh-add
+#ssh-add
 
 # Install/update etcdctl, fleetctl and kubectl
 
 # fetch from settings file
-master_name=kmaster
+master_name=core0
 
 # get master external IP
-master_ip=10.0.1.150
+master_ip=192.168.122.90
 # path to the folder where we store our binary files
 export PATH=${HOME}/k8s-bin:$PATH
 

@@ -4,13 +4,13 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
 EnvironmentFile=/etc/environment
-ExecStartPre=/bin/bash -c '/usr/bin/wget -N -P /opt/bin https://storage.googleapis.com/kubernetes-release/release/_K8S_VERSION_/bin/linux/amd64/kubelet'
+ExecStartPre=/bin/bash -c '/usr/bin/wget -N -P /opt/bin https://storage.googleapis.com/kubernetes-release/release/v1.0.5/bin/linux/amd64/kubelet'
 ExecStartPre=/usr/bin/chmod +x /opt/bin/kubelet
 ExecStart=/opt/bin/kubelet \
  --address=0.0.0.0 \
  --port=10250 \
  --register-node=true \
- --api_servers=http://10.0.1.150:8080 \
+ --api_servers=http://192.168.122.90:8080 \
  --allow_privileged=true \
  --logtostderr=true \
  --cadvisor_port=4194 \

@@ -23,17 +23,16 @@ sed -i "" -e 's/_K8S_VERSION_/'$k8s_version'/g' ./units/*.service
 #
 
 # fetch from settings file
-project=$(cat settings | grep project= | head -1 | cut -f2 -d"=")
-master_name=$(cat settings | grep master_name= | head -1 | cut -f2 -d"=")
+master_name=core0
 
 # set binaries folder, fleet tunnel to master's external IP
 # get master external IP
-master_external_ip=$(gcloud compute instances list --project=$project | grep -v grep | grep $master_name | awk {'print $5'});
+master_external_ip=192.268.122.90
 # path to the folder where we store our binary files
 export PATH=${HOME}/k8s-bin:$PATH
 # fleet tunnel
-export FLEETCTL_TUNNEL="$master_external_ip"
-export FLEETCTL_STRICT_HOST_KEY_CHECKING=false
+#export FLEETCTL_TUNNEL="$master_external_ip"
+#export FLEETCTL_STRICT_HOST_KEY_CHECKING=false
 
 # deploy fleet units
 echo "Kubernetes $k8s_version will be installed ... "

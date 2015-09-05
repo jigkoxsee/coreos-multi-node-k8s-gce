@@ -4,10 +4,10 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
 LimitNOFILE=50000
-ExecStartPre=/bin/bash -c '/usr/bin/wget -N -P /opt/bin https://storage.googleapis.com/kubernetes-release/release/_K8S_VERSION_/bin/linux/amd64/kube-proxy'
+ExecStartPre=/bin/bash -c '/usr/bin/wget -N -P /opt/bin https://storage.googleapis.com/kubernetes-release/release/v1.0.5/bin/linux/amd64/kube-proxy'
 ExecStartPre=/usr/bin/chmod +x /opt/bin/kube-proxy
 ExecStart=/opt/bin/kube-proxy \
- --master=http://10.0.1.150:8080 \
+ --master=http://192.168.122.90:8080 \
  --logtostderr=true
 
 [X-Fleet]
