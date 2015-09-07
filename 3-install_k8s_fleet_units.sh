@@ -22,17 +22,10 @@ k8s_version=$(get_latest_version_number)
 sed -i "" -e 's/_K8S_VERSION_/'$k8s_version'/g' ./units/*.service
 #
 
-# fetch from settings file
-master_name=core0
-
 # set binaries folder, fleet tunnel to master's external IP
 # get master external IP
-master_external_ip=192.268.122.90
 # path to the folder where we store our binary files
 export PATH=${HOME}/k8s-bin:$PATH
-# fleet tunnel
-#export FLEETCTL_TUNNEL="$master_external_ip"
-#export FLEETCTL_STRICT_HOST_KEY_CHECKING=false
 
 # deploy fleet units
 echo "Kubernetes $k8s_version will be installed ... "
