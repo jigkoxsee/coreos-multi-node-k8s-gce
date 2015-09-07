@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #ssh-add
-
 # Install/update etcdctl, fleetctl and kubectl
 
 # path to the folder where we store our binary files
@@ -23,10 +22,7 @@ k8s_version=$(get_latest_version_number)
 mkdir tmp
 
 echo "Downloading and instaling fleetctl, etcdctl and kubectl ..."
-# First let's check which OS we use: OS X or Linux
-uname=$(uname)
-# Linux
-#
+
 mkdir ~/k8s-bin
 cd ./tmp
 # download etcd and fleet clients for Linux

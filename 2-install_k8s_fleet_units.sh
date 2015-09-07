@@ -20,10 +20,10 @@ k8s_version=$(get_latest_version_number)
 
 # update fleet units with k8s version
 sed -i "" -e 's/_K8S_VERSION_/'$k8s_version'/g' ./units/*.service
-#
+# update fleet unit var master-ip,cluster-ip
+# sed -i ...
 
 # set binaries folder, fleet tunnel to master's external IP
-# get master external IP
 # path to the folder where we store our binary files
 export PATH=${HOME}/k8s-bin:$PATH
 
