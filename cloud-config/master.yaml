@@ -2,21 +2,23 @@
 ssh_authorized_keys:
  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDyS+f8gcGpLrxvM5v4Ro0VNYnhdC6/48HEPX5oUigTviilB/nMC/f8r05MJ4GpWO0dAq2FVEjt1EdQ3hu+9Pviu2h7Zj3EX/qkud7RbodttMOsL5QGhDYzWMlbFIqCyaOKS0vuo1Ex/G4dBdt2P3rNFnDozAiz6RQvxupBrE7b/ZhHze6VUwF3NSqCYoUpBDrmeSHgRGse6JmoINWpJOUd2nDECn/v8jiUisKPf3lTOXyti4sQL3kCJERAaj4T/WESa2LtAu9lskJ8GzUPcimv7XcZq/yzkFsCcU0/mHEydQrlS/n9afgZaPHPEpu/GuRIiVGKwsjSRK7jtgQHkUQL ionization@hp2.soup.ce.kmitl.ac.th
 
-hostname: core.soup.ce.kmitl.ac.th
+hostname: coremaster.soup.ce.kmitl.ac.th
 
 coreos:
   etcd2:
     name: master
-    initial-advertise-peer-urls: http://192.168.122.90:2380
+    initial-advertise-peer-urls: http://192.168.122.43:2380
     initial-cluster-token: k8s_etcd
-    initial-cluster: master1=http://192.168.122.90:2380
+    initial-cluster: master=http://192.168.122.43:2380
     initial-cluster-state: new
-    listen-peer-urls: http://192.168.122.90:2380,http://192.168.122.90:7001
+    listen-peer-urls: http://192.168.122.43:2380,http://192.168.122.43:7001
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-    advertise-client-urls: http://192.168.122.90:2379,http://192.168.122.90:4001
+    advertise-client-urls: http://192.168.122.43:2379,http://192.168.122.43:4001
   fleet:
     metadata: role=master
   units:
+    - name: systemd-networkd.service
+      command: stop
     - name: 00-ens3.network
       runtime: true
       content: |
@@ -24,8 +26,15 @@ coreos:
         Name=ens3
 
         [Network]
-        Address=192.168.122.90/24
-	Gateway=192.168.122.1
+        Address=192.168.122.43/24
+        Gateway=192.168.122.1
+    - name: down-interfaces.service
+      command: start
+      content: |
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/ip link set ens3 down
+        ExecStart=/usr/bin/ip addr flush dev ens3
     - name: etcd2.service
       command: start
     - name: fleet.service

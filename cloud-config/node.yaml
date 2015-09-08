@@ -29,7 +29,7 @@ coreos:
       content: |
         [Service]
         Type=oneshot
-        ExecStart=/usr/bin/ip link ens3 down
+        ExecStart=/usr/bin/ip link set ens3 down
         ExecStart=/usr/bin/ip addr flush dev ens3
     - name: fleet.service
       command: start
