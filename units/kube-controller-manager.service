@@ -10,8 +10,8 @@ ExecStartPre=/usr/bin/chmod +x /opt/bin/kube-controller-manager
 ExecStart=/opt/bin/kube-controller-manager \
  --master=127.0.0.1:8080 \
  --logtostderr=true \
- --service-account-private-key-file="/srv/kubernetes/server.key" \
- --root-ca-file="/srv/kubernetes/ca.crt"
+ --service-account-private-key-file="/home/core/kubernetes/server.key" \
+ --root-ca-file="/home/core/kubernetes/ca.crt"
 
 Restart=always
 RestartSec=10
